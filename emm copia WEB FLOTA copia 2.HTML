@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emm 🌼 </title>
+    <style>
+        /* Estilos Base Techno - ORIGINALES E INTACTOS */
+        body {
+            background-color: #000;
+            margin: 0;
+            min-height: 220vh; /* Permite el scroll hacia la mesa */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 1. CASILLA DE FECHA (IZQUIERDA) --- ORIGINAL */
+        #date-box {
+            position: fixed; 
+            left: 20px;
+            top: 20px;
+            border: 1px solid #00FF41;
+            padding: 10px;
+            background: rgba(0, 255, 65, 0.05);
+            text-align: left;
+            font-size: 0.8rem;
+            z-index: 15;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+        .date-label { color: #00FF41; font-weight: bold; display: block; margin-bottom: 2px; }
+        .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
+        #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+
+        /* --- 2. LA MARGARITA PIXELADA --- ORIGINAL */
+        .section-top {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .pixel-daisy {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            background: #FFD700; 
+            box-shadow: 
+                10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700,
+                0 -20px #FFFF00, 0 -30px #FFFF00, 10px -20px #FFFF00, -10px -20px #FFFF00,
+                0 30px #FFFF00, 0 40px #FFFF00, 10px 30px #FFFF00, -10px 30px #FFFF00,
+                30px 0 #FFFF00, 40px 0 #FFFF00, 30px 10px #FFFF00, 30px -10px #FFFF00,
+                -30px 0 #FFFF00, -40px 0 #FFFF00, -30px 10px #FFFF00, -30px -10px #FFFF00,
+                20px 20px #FFFF00, 20px -20px #FFFF00, -20px 20px #FFFF00, -20px -20px #FFFF00,
+                0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50;
+            animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            from { filter: drop-shadow(0 0 5px #FFFF00) brightness(1); }
+            to { filter: drop-shadow(0 0 20px #FFFF00) brightness(1.3); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        /* --- 3. MENSAJE Y BOTÓN ROJO --- ORIGINAL */
+        #content-container {
+            margin-top: 110px;
+            text-align: center;
+            max-width: 85%;
+            z-index: 5;
+            opacity: 0;
+            animation: fadeIn 3s ease-out forwards 1s;
+        }
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #00FF41; 
+            text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+            margin-bottom: 35px;
+        }
+        #love-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 5px 0 #b03a2e;
+            transition: all 0.1s;
+        }
+        #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .heart {
+            position: fixed;
+            font-size: 1.8rem;
+            pointer-events: none;
+            z-index: 101;
+            animation: fly linear forwards;
+        }
+        @keyframes fly {
+            to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* --- NUEVA ÁREA: MESA Y JARRÓN (CON MUCHO ESPACIO) --- */
+        .section-bottom {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding-top: 400px; /* AQUÍ ESTÁ EL ESPACIO EXTRA ENTRE BOTÓN Y MESA */
+        }
+
+        .mesa-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 200px; /* ESPACIO AL FINAL PARA PERSPECTIVA */
+        }
+
+        .mesa-linea {
+            width: 320px;
+            height: 4px;
+            background: #00FF41;
+            box-shadow: 0 0 15px #00FF41;
+        }
+
+        .jarron {
+            width: 40px;
+            height: 55px;
+            border: 2px solid #00FF41;
+            border-bottom: none;
+            background: rgba(0, 255, 65, 0.1);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+        }
+
+        /* Contenedor del Ramo */
+        #ramo-container {
+            position: absolute;
+            bottom: 55px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .flor-ramo { position: absolute; bottom: 0; }
+        .f1 { left: 5px; transform: rotate(-15deg); }
+        .f2 { left: 40px; bottom: 10px; }
+        .f3 { left: 75px; transform: rotate(15deg); }
+        .tallo { width: 2px; height: 60px; background: #4CAF50; margin: 0 auto; }
+
+        @media (max-width: 600px) {
+            #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
+            .message { font-size: 0.95rem; }
+            .section-bottom { padding-top: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div id="date-box">
+        <span class="date-label">¿CUANTO TE AMO?</span>
+        <span class="date-today">JUSTO AHORA: <span id="current-date"></span></span>
+        <div id="live-timer">00:00:00:000</div>
+    </div>
+
+    <div class="section-top">
+        <div class="pixel-daisy"></div>
+
+        <div id="content-container">
+            <p class="message">
+                > Hoy no te pude dar flores amarillas<br>
+                > Pero nunca te van a faltar conmigo<br>
+                > TE AMO del 1 al 2 mi Emmita_
+            </p>
+            <button id="love-button">pulsa para saber cuanto te amo</button>
+        </div>
+    </div>
+
+    <div class="section-bottom">
+        <div class="mesa-area">
+            <div id="ramo-container">
+                <div id="slot1" class="flor-ramo f1"></div>
+                <div id="slot2" class="flor-ramo f2"></div>
+                <div id="slot3" class="flor-ramo f3"></div>
+            </div>
+            <div class="jarron"></div>
+            <div class="mesa-linea"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica del Reloj ORIGINAL
+        function updateClock() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('current-date').innerText = `${day}/${month}/${year}`;
+
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const ms = String(now.getMilliseconds()).padStart(3, '0');
+            document.getElementById('live-timer').innerText = `${h}:${m}:${s}:${ms}`;
+            requestAnimationFrame(updateClock);
+        }
+        updateClock();
+
+        // Configuración de Flores
+        const tiposFlores = [
+            { id: 'Rosa', color: '#ff0000', centro: '#800000' },
+            { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
+            { id: 'Tulipan', color: '#ff69b4', centro: '#ff1493' },
+            { id: 'Margarita', color: '#ffffff', centro: '#FFD700' }
+        ];
+
+        function dibujarFlorRamo(slotId, config) {
+            const el = document.getElementById(slotId);
+            el.innerHTML = `
+                <div style="width:16px; height:16px; background:${config.centro}; 
+                     box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
+                </div>
+                <div class="tallo"></div>
+            `;
+        }
+
+        const diaSemana = new Date().getDay(); 
+        const combinaciones = [
+            [0, 0, 0], [1, 0, 1], [2, 2, 2], [3, 1, 3], [0, 2, 0], [1, 1, 1], [3, 0, 2]
+        ];
+        const hoy = combinaciones[diaSemana];
+
+        dibujarFlorRamo('slot1', tiposFlores[hoy[0]]);
+        dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
+        dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
+
+        // Lógica de Corazones y Activación ORIGINAL
+        const btn = document.getElementById('love-button');
+        const ramo = document.getElementById('ramo-container');
+        let heartMultiplier = 6;
+
+        btn.addEventListener('click', () => {
+            ramo.style.opacity = "1";
+            const rect = btn.getBoundingClientRect();
+            for(let i=0; i < heartMultiplier; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart'; h.innerHTML = '❤️';
+                h.style.left = (rect.left + rect.width/2) + 'px';
+                h.style.top = (rect.top + rect.height/2) + 'px';
+                h.style.setProperty('--x', (Math.random()*600 - 300) + 'px');
+                h.style.setProperty('--y', -(Math.random()*500 + 150) + 'px');
+                h.style.animationDuration = (Math.random()*2 + 1) + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 2500);
+            }
+            heartMultiplier += 2;
+        });
+    </script>
+</body>
+</html>
