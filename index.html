@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emm 🌼 </title>
     <style>
-        /* Estilos Base Techno - ORIGINALES E INTACTOS */
+        /* Estilos Base Techno */
         body {
             background-color: #000;
             margin: 0;
-            min-height: 220vh; /* Permite el scroll hacia la mesa */
+            min-height: 220vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,7 +20,6 @@
             scroll-behavior: smooth;
         }
 
-        /* --- 1. CASILLA DE FECHA (IZQUIERDA) --- ORIGINAL */
         #date-box {
             position: fixed; 
             left: 20px;
@@ -36,7 +35,8 @@
         .date-label { color: #00FF41; font-weight: bold; display: block; margin-bottom: 2px; }
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
-/* Estilos para las 4 flores laterales fijas */
+
+        /* Contenedor Flores Neón */
         .flower-container-fixed {
             position: absolute;
             top: 50%;
@@ -53,16 +53,15 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background: #FFD700; /* Centro siempre amarillo */
+            background: #FFD700;
             animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
         }
 
-        /* Posiciones fijas según tu ramillete */
         .pos-L2 { transform: translate(-160px, -40px); animation-delay: 0.2s; }
         .pos-L1 { transform: translate(-80px, -20px); animation-delay: 0.5s; }
         .pos-R1 { transform: translate(80px, -20px); animation-delay: 0.8s; }
         .pos-R2 { transform: translate(160px, -40px); animation-delay: 0.3s; }
-        /* --- 2. LA MARGARITA PIXELADA --- ORIGINAL */
+
         .section-top {
             height: 100vh;
             display: flex;
@@ -98,7 +97,6 @@
             50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* --- 3. MENSAJE Y BOTÓN ROJO --- ORIGINAL */
         #content-container {
             margin-top: 110px;
             text-align: center;
@@ -149,14 +147,13 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- NUEVA ÁREA: MESA Y JARRÓN (CON MUCHO ESPACIO) --- */
         .section-bottom {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            padding-top: 400px; /* AQUÍ ESTÁ EL ESPACIO EXTRA ENTRE BOTÓN Y MESA */
+            padding-top: 400px;
         }
 
         .mesa-area {
@@ -164,7 +161,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            margin-bottom: 200px; /* ESPACIO AL FINAL PARA PERSPECTIVA */
+            margin-bottom: 200px;
         }
 
         .mesa-linea {
@@ -184,7 +181,6 @@
             position: relative;
         }
 
-        /* Contenedor del Ramo */
         #ramo-container {
             position: absolute;
             bottom: 55px;
@@ -202,26 +198,25 @@
         .f3 { left: 75px; transform: rotate(15deg); }
         .tallo { width: 2px; height: 60px; background: #4CAF50; margin: 0 auto; }
 
+        .heart-scroll {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 99;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
         @media (max-width: 600px) {
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
             .message { font-size: 0.95rem; }
             .section-bottom { padding-top: 300px; }
         }
-         /* Animación para la lluvia al bajar (Scroll) */
-.heart-scroll {
-    position: fixed;
-    font-size: 1.5rem;
-    pointer-events: none;
-    z-index: 99;
-    animation: fall linear forwards;
-}
-
-@keyframes fall {
-    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-}
     </style>
-   
 </head>
 <body>
 
@@ -232,12 +227,14 @@
         <span class="date-today">JUSTO AHORA: <span id="current-date"></span></span>
         <div id="live-timer">00:00:00:0000</div>
     </div>
-<div class="flower-container-fixed">
+
+    <div class="flower-container-fixed">
         <div id="lat-L2" class="pixel-flower-lateral pos-L2"></div>
         <div id="lat-L1" class="pixel-flower-lateral pos-L1"></div>
         <div id="lat-R1" class="pixel-flower-lateral pos-R1"></div>
         <div id="lat-R2" class="pixel-flower-lateral pos-R2"></div>
     </div>
+
     <div class="section-top">
         <div class="pixel-daisy"></div>
 
@@ -264,20 +261,20 @@
     </div>
 
     <script>
-        // Lluvia de corazones al hacer Scroll
-window.addEventListener('scroll', () => {
-    if (Math.random() > 0.8) { 
-        const h = document.createElement('div');
-        h.className = 'heart-scroll';
-        h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
-        h.style.left = Math.random() * 100 + 'vw';
-        h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-        document.body.appendChild(h);
-        
-        setTimeout(() => h.remove(), 5000);
-    }
-});
-        // Lógica del Reloj ORIGINAL
+        // 1. LLUVIA AL SCROLL
+        window.addEventListener('scroll', () => {
+            if (Math.random() > 0.8) { 
+                const h = document.createElement('div');
+                h.className = 'heart-scroll';
+                h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }
+        });
+
+        // 2. RELOJ
         function updateClock() {
             const now = new Date();
             const day = String(now.getDate()).padStart(2, '0');
@@ -294,7 +291,7 @@ window.addEventListener('scroll', () => {
         }
         updateClock();
 
-        // Configuración de Flores
+        // 3. FLORES DEL JARRÓN
         const tiposFlores = [
             { id: 'Rosa', color: '#ff0000', centro: '#800000' },
             { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
@@ -317,12 +314,36 @@ window.addEventListener('scroll', () => {
             [0, 0, 0], [1, 0, 1], [2, 2, 2], [3, 1, 3], [0, 2, 0], [1, 1, 1], [3, 0, 2]
         ];
         const hoy = combinaciones[diaSemana];
-
         dibujarFlorRamo('slot1', tiposFlores[hoy[0]]);
         dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
         dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
 
-        // Lógica de Corazones y Activación ORIGINAL
+        // 4. LÓGICA DE LAS 5 FLORES NEÓN (TOP) - 15 COMBINACIONES
+        function crearPetalos(color) {
+            return `10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700, 0 -20px ${color}, 0 -30px ${color}, 10px -20px ${color}, -10px -20px ${color}, 0 30px ${color}, 0 40px ${color}, 10px 30px ${color}, -10px 30px ${color}, 30px 0 ${color}, 40px 0 ${color}, 30px 10px ${color}, 30px -10px ${color}, -30px 0 ${color}, -40px 0 ${color}, -30px 10px ${color}, -30px -10px ${color}, 20px 20px ${color}, 20px -20px ${color}, -20px 20px ${color}, -20px -20px ${color}, 0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50`;
+        }
+
+        const paleta = ['#bc13fe', '#1e90ff', '#ff007f', '#39ff14', '#ff6600', '#ffffff', '#00ffff', '#ff0000', '#ff00ff', '#00ff00', '#ffff00', '#0000ff', '#ffaa00', '#00ffaa', '#aaff00'];
+        const combinaciones15 = [
+            [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 0], [1, 3, 5, 7],
+            [2, 4, 6, 8], [9, 11, 13, 0], [1, 2, 1, 2], [3, 4, 3, 4], [5, 6, 5, 6],
+            [7, 8, 7, 8], [14, 12, 10, 8], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14]
+        ];
+
+        const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        const miCombo = combinaciones15[diaDelAnio % 15];
+
+        const ids = ['lat-L2', 'lat-L1', 'lat-R1', 'lat-R2'];
+        ids.forEach((id, index) => {
+            const el = document.getElementById(id);
+            if(el) {
+                const colorHoy = paleta[miCombo[index]];
+                el.style.boxShadow = crearPetalos(colorHoy);
+                el.style.filter = `drop-shadow(0 0 10px ${colorHoy})`;
+            }
+        });
+
+        // 5. BOTÓN DE AMOR
         const btn = document.getElementById('love-button');
         const ramo = document.getElementById('ramo-container');
         let heartMultiplier = 6;
@@ -342,33 +363,6 @@ window.addEventListener('scroll', () => {
                 setTimeout(() => h.remove(), 2500);
             }
             heartMultiplier += 2;
-            // Función para generar el sombreado de pétalos (estilo original)
-        function crearPetalos(color) {
-            return `10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700, 0 -20px ${color}, 0 -30px ${color}, 10px -20px ${color}, -10px -20px ${color}, 0 30px ${color}, 0 40px ${color}, 10px 30px ${color}, -10px 30px ${color}, 30px 0 ${color}, 40px 0 ${color}, 30px 10px ${color}, 30px -10px ${color}, -30px 0 ${color}, -40px 0 ${color}, -30px 10px ${color}, -30px -10px ${color}, 20px 20px ${color}, 20px -20px ${color}, -20px 20px ${color}, -20px -20px ${color}, 0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50`;
-        }
-
-        // Paleta de colores neón
-        const paleta = ['#bc13fe', '#1e90ff', '#ff007f', '#39ff14', '#ff6600', '#ffffff', '#00ffff', '#ff0000', '#ff00ff', '#00ff00', '#ffff00', '#0000ff', '#ffaa00', '#00ffaa', '#aaff00'];
-
-        // 15 combinaciones para las 4 flores [L2, L1, R1, R2]
-        const combinaciones15 = [
-            [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 0], [1, 3, 5, 7],
-            [2, 4, 6, 8], [9, 11, 13, 0], [1, 2, 1, 2], [3, 4, 3, 4], [5, 6, 5, 6],
-            [7, 8, 7, 8], [14, 12, 10, 8], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14]
-        ];
-
-        // Selección basada en el día (ciclo de 15 días)
-        const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-        const miCombo = combinaciones15[diaDelAnio % 15];
-
-        // Aplicar a los elementos
-        const ids = ['lat-L2', 'lat-L1', 'lat-R1', 'lat-R2'];
-        ids.forEach((id, index) => {
-            const el = document.getElementById(id);
-            const colorHoy = paleta[miCombo[index]];
-            el.style.boxShadow = crearPetalos(colorHoy);
-            // Añadimos un pequeño brillo extra al color neón
-            el.style.filter = `drop-shadow(0 0 10px ${colorHoy})`;
         });
     </script>
 </body>
