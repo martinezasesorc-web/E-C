@@ -36,7 +36,32 @@
         .date-label { color: #00FF41; font-weight: bold; display: block; margin-bottom: 2px; }
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+/* Estilos para las 4 flores laterales fijas */
+        .flower-container-fixed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0; height: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 4;
+        }
 
+        .pixel-flower-lateral {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #FFD700; /* Centro siempre amarillo */
+            animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
+        }
+
+        /* Posiciones fijas según tu ramillete */
+        .pos-L2 { transform: translate(-160px, -40px); animation-delay: 0.2s; }
+        .pos-L1 { transform: translate(-80px, -20px); animation-delay: 0.5s; }
+        .pos-R1 { transform: translate(80px, -20px); animation-delay: 0.8s; }
+        .pos-R2 { transform: translate(160px, -40px); animation-delay: 0.3s; }
         /* --- 2. LA MARGARITA PIXELADA --- ORIGINAL */
         .section-top {
             height: 100vh;
@@ -207,7 +232,12 @@
         <span class="date-today">JUSTO AHORA: <span id="current-date"></span></span>
         <div id="live-timer">00:00:00:0000</div>
     </div>
-
+<div class="flower-container-fixed">
+        <div id="lat-L2" class="pixel-flower-lateral pos-L2"></div>
+        <div id="lat-L1" class="pixel-flower-lateral pos-L1"></div>
+        <div id="lat-R1" class="pixel-flower-lateral pos-R1"></div>
+        <div id="lat-R2" class="pixel-flower-lateral pos-R2"></div>
+    </div>
     <div class="section-top">
         <div class="pixel-daisy"></div>
 
@@ -312,6 +342,33 @@ window.addEventListener('scroll', () => {
                 setTimeout(() => h.remove(), 2500);
             }
             heartMultiplier += 2;
+            // Función para generar el sombreado de pétalos (estilo original)
+        function crearPetalos(color) {
+            return `10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700, 0 -20px ${color}, 0 -30px ${color}, 10px -20px ${color}, -10px -20px ${color}, 0 30px ${color}, 0 40px ${color}, 10px 30px ${color}, -10px 30px ${color}, 30px 0 ${color}, 40px 0 ${color}, 30px 10px ${color}, 30px -10px ${color}, -30px 0 ${color}, -40px 0 ${color}, -30px 10px ${color}, -30px -10px ${color}, 20px 20px ${color}, 20px -20px ${color}, -20px 20px ${color}, -20px -20px ${color}, 0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50`;
+        }
+
+        // Paleta de colores neón
+        const paleta = ['#bc13fe', '#1e90ff', '#ff007f', '#39ff14', '#ff6600', '#ffffff', '#00ffff', '#ff0000', '#ff00ff', '#00ff00', '#ffff00', '#0000ff', '#ffaa00', '#00ffaa', '#aaff00'];
+
+        // 15 combinaciones para las 4 flores [L2, L1, R1, R2]
+        const combinaciones15 = [
+            [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 0], [1, 3, 5, 7],
+            [2, 4, 6, 8], [9, 11, 13, 0], [1, 2, 1, 2], [3, 4, 3, 4], [5, 6, 5, 6],
+            [7, 8, 7, 8], [14, 12, 10, 8], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14]
+        ];
+
+        // Selección basada en el día (ciclo de 15 días)
+        const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        const miCombo = combinaciones15[diaDelAnio % 15];
+
+        // Aplicar a los elementos
+        const ids = ['lat-L2', 'lat-L1', 'lat-R1', 'lat-R2'];
+        ids.forEach((id, index) => {
+            const el = document.getElementById(id);
+            const colorHoy = paleta[miCombo[index]];
+            el.style.boxShadow = crearPetalos(colorHoy);
+            // Añadimos un pequeño brillo extra al color neón
+            el.style.filter = `drop-shadow(0 0 10px ${colorHoy})`;
         });
     </script>
 </body>
