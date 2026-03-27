@@ -234,6 +234,23 @@
     </div>
 
     <script>
+        // Lluvia de corazones al hacer Scroll
+window.addEventListener('scroll', () => {
+    // Si quieres que salgan más corazones, baja el 0.8 (ejemplo: 0.5)
+    if (Math.random() > 0.8) { 
+        const h = document.createElement('div');
+        h.className = 'heart-scroll';
+        // Alterna entre corazón rojo y amarillo
+        h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
+        h.style.left = Math.random() * 100 + 'vw';
+        // Velocidad de caída aleatoria
+        h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+        document.body.appendChild(h);
+        
+        // Se eliminan solos después de 5 segundos para no trabar la página
+        setTimeout(() => h.remove(), 5000);
+    }
+});
         // Lógica del Reloj ORIGINAL
         function updateClock() {
             const now = new Date();
