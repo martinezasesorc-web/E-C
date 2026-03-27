@@ -37,7 +37,7 @@
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
 
-        /* --- 2. LA SECCIÓN DE ARRIBA (FLORES NEÓN) --- */
+        /* --- 2. LA SECCIÓN DE ARRIBA (FLORES NEÓN EN LÍNEA) --- */
         .section-top {
             height: 100vh;
             display: flex;
@@ -53,6 +53,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 150px;
         }
 
         .pixel-flower-side {
@@ -60,6 +61,7 @@
             width: 10px;
             height: 10px;
             background: #FFD700; 
+            /* El color --c se controla desde JavaScript */
             box-shadow: 
                 10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700,
                 0 -20px var(--c), 0 -30px var(--c), 10px -20px var(--c), -10px -20px var(--c),
@@ -71,11 +73,11 @@
             animation: pulse-side 2s infinite alternate, float 4s ease-in-out infinite;
         }
 
-        /* AJUSTE DE POSICIONES: Alineadas verticalmente pero separadas por altura */
-        .f-orange { --c: #ff6600; transform: translate(-140px, -85px); animation-delay: 0.2s; }
-        .f-green  { --c: #39ff14; transform: translate(-140px, 85px); animation-delay: 0.5s; }
-        .f-yellow { --c: #FFFF00; transform: translate(140px, -85px); animation-delay: 0.8s; }
-        .f-purple { --c: #bc13fe; transform: translate(140px, 85px); animation-delay: 0.3s; }
+        /* Alineación en la misma línea horizontal */
+        .f-1 { --c: var(--clr-1); transform: translateX(-180px); animation-delay: 0.1s; }
+        .f-2 { --c: var(--clr-2); transform: translateX(-90px); animation-delay: 0.3s; }
+        .f-3 { --c: var(--clr-3); transform: translateX(90px); animation-delay: 0.5s; }
+        .f-4 { --c: var(--clr-4); transform: translateX(180px); animation-delay: 0.7s; }
 
         .pixel-daisy {
             position: relative;
@@ -109,9 +111,9 @@
             50% { margin-top: -15px; }
         }
 
-        /* --- 3. MENSAJE Y BOTÓN ROJO --- */
+        /* --- 3. MENSAJE Y BOTÓN --- */
         #content-container {
-            margin-top: 110px;
+            margin-top: 130px;
             text-align: center;
             max-width: 85%;
             z-index: 5;
@@ -149,18 +151,6 @@
             z-index: 100;
         }
 
-        .heart {
-            position: fixed;
-            font-size: 1.8rem;
-            pointer-events: none;
-            z-index: 101;
-            animation: fly linear forwards;
-        }
-        @keyframes fly {
-            to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
-
         /* --- MESA Y JARRÓN --- */
         .section-bottom {
             width: 100%;
@@ -170,7 +160,6 @@
             position: relative;
             padding-top: 400px;
         }
-
         .mesa-area {
             display: flex;
             flex-direction: column;
@@ -178,14 +167,12 @@
             position: relative;
             margin-bottom: 200px;
         }
-
         .mesa-linea {
             width: 320px;
             height: 4px;
             background: #00FF41;
             box-shadow: 0 0 15px #00FF41;
         }
-
         .jarron {
             width: 40px;
             height: 55px;
@@ -196,43 +183,25 @@
             position: relative;
         }
 
-        #ramo-container {
-            position: absolute;
-            bottom: 55px;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-        }
-
-        .flor-ramo { position: absolute; bottom: 0; }
-        .f1 { left: 5px; transform: rotate(-15deg); }
-        .f2 { left: 40px; bottom: 10px; }
-        .f3 { left: 75px; transform: rotate(15deg); }
-        .tallo { width: 2px; height: 60px; background: #4CAF50; margin: 0 auto; }
-
-        .heart-scroll {
+        .heart, .heart-scroll {
             position: fixed;
-            font-size: 1.5rem;
             pointer-events: none;
-            z-index: 99;
-            animation: fall linear forwards;
+            z-index: 101;
         }
-
+        @keyframes fly { to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
         @keyframes fall {
             0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
+        @keyframes fadeIn { to { opacity: 1; } }
 
         @media (max-width: 600px) {
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
             .message { font-size: 0.95rem; }
-            .section-bottom { padding-top: 300px; }
-            /* Ajuste móvil para que no se salgan de la pantalla */
-            .f-orange, .f-green { transform: translate(-100px, var(--y-offset)); }
-            .f-yellow, .f-purple { transform: translate(100px, var(--y-offset)); }
+            .f-1 { transform: translateX(-120px); }
+            .f-2 { transform: translateX(-60px); }
+            .f-3 { transform: translateX(60px); }
+            .f-4 { transform: translateX(120px); }
         }
     </style>
 </head>
@@ -247,14 +216,14 @@
     </div>
 
     <div class="section-top">
-        <div class="flower-cluster">
-            <div class="pixel-flower-side f-orange"></div>
-            <div class="pixel-flower-side f-green"></div>
+        <div class="flower-cluster" id="neon-cluster">
+            <div class="pixel-flower-side f-1"></div>
+            <div class="pixel-flower-side f-2"></div>
             
             <div class="pixel-daisy"></div>
 
-            <div class="pixel-flower-side f-yellow"></div>
-            <div class="pixel-flower-side f-purple"></div>
+            <div class="pixel-flower-side f-3"></div>
+            <div class="pixel-flower-side f-4"></div>
         </div>
 
         <div id="content-container">
@@ -269,10 +238,10 @@
 
     <div class="section-bottom">
         <div class="mesa-area">
-            <div id="ramo-container">
-                <div id="slot1" class="flor-ramo f1"></div>
-                <div id="slot2" class="flor-ramo f2"></div>
-                <div id="slot3" class="flor-ramo f3"></div>
+            <div id="ramo-container" style="position:absolute; bottom:55px; width:100px; height:100px; display:flex; justify-content:center; opacity:0; transition:opacity 1.5s ease;">
+                <div id="slot1" style="position:absolute; bottom:0; left:5px; transform:rotate(-15deg);"></div>
+                <div id="slot2" style="position:absolute; bottom:0; left:40px; bottom:10px;"></div>
+                <div id="slot3" style="position:absolute; bottom:0; left:75px; transform:rotate(15deg);"></div>
             </div>
             <div class="jarron"></div>
             <div class="mesa-linea"></div>
@@ -280,27 +249,25 @@
     </div>
 
     <script>
-        // Lluvia de corazones al hacer Scroll
-        window.addEventListener('scroll', () => {
-            if (Math.random() > 0.8) { 
-                const h = document.createElement('div');
-                h.className = 'heart-scroll';
-                h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
-                h.style.left = Math.random() * 100 + 'vw';
-                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 5000);
-            }
-        });
+        // 1. Lógica de Colores "Infinitos" Diarios
+        function actualizarColoresDiarios() {
+            const ahora = new Date();
+            // Generamos una semilla única por día
+            const semilla = ahora.getFullYear() * 372 + (ahora.getMonth() + 1) * 31 + ahora.getDate();
+            const cluster = document.getElementById('neon-cluster');
 
-        // Lógica del Reloj
+            for (let i = 1; i <= 4; i++) {
+                // Variamos el matiz (Hue) basado en la semilla y la posición de la flor
+                const hue = (semilla * (i * 97)) % 360; 
+                cluster.style.setProperty(`--clr-${i}`, `hsl(${hue}, 100%, 50%)`);
+            }
+        }
+        actualizarColoresDiarios();
+
+        // 2. Reloj y Fecha
         function updateClock() {
             const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            document.getElementById('current-date').innerText = `${day}/${month}/${year}`;
-
+            document.getElementById('current-date').innerText = now.toLocaleDateString('es-ES');
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
@@ -310,7 +277,7 @@
         }
         updateClock();
 
-        // Configuración de Flores del jarron
+        // 3. Flores del Ramo (Lógica semanal ya existente)
         const tiposFlores = [
             { id: 'Rosa', color: '#ff0000', centro: '#800000' },
             { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
@@ -322,42 +289,51 @@
             const el = document.getElementById(slotId);
             el.innerHTML = `
                 <div style="width:16px; height:16px; background:${config.centro}; 
-                      box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
+                    box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
                 </div>
-                <div class="tallo"></div>
+                <div style="width: 2px; height: 60px; background: #4CAF50; margin: 0 auto;"></div>
             `;
         }
 
         const diaSemana = new Date().getDay(); 
-        const combinaciones = [
-            [0, 0, 0], [1, 0, 1], [2, 2, 2], [3, 1, 3], [0, 2, 0], [1, 1, 1], [3, 0, 2]
-        ];
+        const combinaciones = [[0,0,0], [1,0,1], [2,2,2], [3,1,3], [0,2,0], [1,1,1], [3,0,2]];
         const hoy = combinaciones[diaSemana];
-
         dibujarFlorRamo('slot1', tiposFlores[hoy[0]]);
         dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
         dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
 
-        // Botón Rojo
+        // 4. Interacciones (Scroll y Botón)
+        window.addEventListener('scroll', () => {
+            if (Math.random() > 0.8) { 
+                const h = document.createElement('div');
+                h.className = 'heart-scroll'; h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.top = '-50px'; h.style.fontSize = '1.5rem';
+                h.style.animation = `fall ${Math.random()*2 + 3}s linear forwards`;
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }
+        });
+
         const btn = document.getElementById('love-button');
         const ramo = document.getElementById('ramo-container');
-        let heartMultiplier = 6;
+        let multiplier = 6;
 
         btn.addEventListener('click', () => {
             ramo.style.opacity = "1";
             const rect = btn.getBoundingClientRect();
-            for(let i=0; i < heartMultiplier; i++) {
+            for(let i=0; i < multiplier; i++) {
                 const h = document.createElement('div');
                 h.className = 'heart'; h.innerHTML = '❤️';
                 h.style.left = (rect.left + rect.width/2) + 'px';
                 h.style.top = (rect.top + rect.height/2) + 'px';
                 h.style.setProperty('--x', (Math.random()*600 - 300) + 'px');
                 h.style.setProperty('--y', -(Math.random()*500 + 150) + 'px');
-                h.style.animationDuration = (Math.random()*2 + 1) + 's';
+                h.style.animation = `fly ${Math.random()*2 + 1}s linear forwards`;
                 document.body.appendChild(h);
                 setTimeout(() => h.remove(), 2500);
             }
-            heartMultiplier += 2;
+            multiplier += 2;
         });
     </script>
 </body>
