@@ -36,17 +36,20 @@
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
 
-        /* Contenedor Flores Neón */
+        /* --- CORRECCIÓN DE POSICIÓN DE FLORES --- */
         .flower-container-fixed {
             position: absolute;
-            top: 50%;
+            top: 0; /* Subido al inicio de la página */
             left: 50%;
-            width: 0; height: 0;
+            width: 10px; 
+            height: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             pointer-events: none;
             z-index: 4;
+            /* Esto las centra exactamente sobre la flor amarilla principal */
+            margin-top: calc(50vh - 5px); 
         }
 
         .pixel-flower-lateral {
@@ -57,6 +60,7 @@
             animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
         }
 
+        /* Posiciones ajustadas respecto al centro */
         .pos-L2 { transform: translate(-160px, -40px); animation-delay: 0.2s; }
         .pos-L1 { transform: translate(-80px, -20px); animation-delay: 0.5s; }
         .pos-R1 { transform: translate(80px, -20px); animation-delay: 0.8s; }
@@ -240,9 +244,9 @@
 
         <div id="content-container">
             <p class="message">
-                > TE AMO CORAZONA DE MELON<br>
-                > Nunca te van a faltar flores conmigo<br>
-                > TE AMO del 1 al 2 mi Emmita_
+                &gt; TE AMO CORAZONA DE MELON<br>
+                &gt; Nunca te van a faltar flores conmigo<br>
+                &gt; TE AMO del 1 al 2 mi Emmita_
             </p>
             <button id="love-button">pulsa para saber cuanto te amo</button>
         </div>
@@ -318,16 +322,18 @@
         dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
         dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
 
-        // 4. LÓGICA DE LAS 5 FLORES NEÓN (TOP) - 15 COMBINACIONES
+        // 4. LÓGICA DE LAS 5 FLORES NEÓN (TOP)
         function crearPetalos(color) {
             return `10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700, 0 -20px ${color}, 0 -30px ${color}, 10px -20px ${color}, -10px -20px ${color}, 0 30px ${color}, 0 40px ${color}, 10px 30px ${color}, -10px 30px ${color}, 30px 0 ${color}, 40px 0 ${color}, 30px 10px ${color}, 30px -10px ${color}, -30px 0 ${color}, -40px 0 ${color}, -30px 10px ${color}, -30px -10px ${color}, 20px 20px ${color}, 20px -20px ${color}, -20px 20px ${color}, -20px -20px ${color}, 0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50`;
         }
 
         const paleta = ['#bc13fe', '#1e90ff', '#ff007f', '#39ff14', '#ff6600', '#ffffff', '#00ffff', '#ff0000', '#ff00ff', '#00ff00', '#ffff00', '#0000ff', '#ffaa00', '#00ffaa', '#aaff00'];
+        
+        // CORRECCIÓN: Estas combinaciones ahora aseguran que SIEMPRE haya 4 colores para las laterales
         const combinaciones15 = [
             [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 0], [1, 3, 5, 7],
-            [2, 4, 6, 8], [9, 11, 13, 0], [1, 2, 1, 2], [3, 4, 3, 4], [5, 6, 5, 6],
-            [7, 8, 7, 8], [14, 12, 10, 8], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14]
+            [2, 4, 6, 8], [9, 11, 13, 14], [1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12],
+            [13, 14, 0, 1], [14, 12, 10, 8], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14]
         ];
 
         const diaDelAnio = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
@@ -340,6 +346,7 @@
                 const colorHoy = paleta[miCombo[index]];
                 el.style.boxShadow = crearPetalos(colorHoy);
                 el.style.filter = `drop-shadow(0 0 10px ${colorHoy})`;
+                el.style.opacity = "1"; // Forzamos a que siempre se vean
             }
         });
 
