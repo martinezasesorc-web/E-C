@@ -73,11 +73,11 @@
             animation: pulse-side 2s infinite alternate, float 4s ease-in-out infinite;
         }
 
-        /* Alineación en la misma línea horizontal */
-        .f-1 { --c: var(--clr-1); transform: translateX(-180px); animation-delay: 0.1s; }
-        .f-2 { --c: var(--clr-2); transform: translateX(-90px); animation-delay: 0.3s; }
-        .f-3 { --c: var(--clr-3); transform: translateX(90px); animation-delay: 0.5s; }
-        .f-4 { --c: var(--clr-4); transform: translateX(180px); animation-delay: 0.7s; }
+        /* --- AJUSTE DE SEPARACIÓN (Escritorio) --- */
+        .f-1 { --c: var(--clr-1); transform: translateX(-240px); animation-delay: 0.1s; }
+        .f-2 { --c: var(--clr-2); transform: translateX(-120px); animation-delay: 0.3s; }
+        .f-3 { --c: var(--clr-3); transform: translateX(120px); animation-delay: 0.5s; }
+        .f-4 { --c: var(--clr-4); transform: translateX(240px); animation-delay: 0.7s; }
 
         .pixel-daisy {
             position: relative;
@@ -195,13 +195,14 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
+        /* --- AJUSTE DE SEPARACIÓN (Móvil) --- */
         @media (max-width: 600px) {
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
             .message { font-size: 0.95rem; }
-            .f-1 { transform: translateX(-120px); }
-            .f-2 { transform: translateX(-60px); }
-            .f-3 { transform: translateX(60px); }
-            .f-4 { transform: translateX(120px); }
+            .f-1 { transform: translateX(-140px); }
+            .f-2 { transform: translateX(-70px); }
+            .f-3 { transform: translateX(70px); }
+            .f-4 { transform: translateX(140px); }
         }
     </style>
 </head>
@@ -252,12 +253,10 @@
         // 1. Lógica de Colores "Infinitos" Diarios
         function actualizarColoresDiarios() {
             const ahora = new Date();
-            // Generamos una semilla única por día
             const semilla = ahora.getFullYear() * 372 + (ahora.getMonth() + 1) * 31 + ahora.getDate();
             const cluster = document.getElementById('neon-cluster');
 
             for (let i = 1; i <= 4; i++) {
-                // Variamos el matiz (Hue) basado en la semilla y la posición de la flor
                 const hue = (semilla * (i * 97)) % 360; 
                 cluster.style.setProperty(`--clr-${i}`, `hsl(${hue}, 100%, 50%)`);
             }
@@ -277,7 +276,7 @@
         }
         updateClock();
 
-        // 3. Flores del Ramo (Lógica semanal ya existente)
+        // 3. Flores del Ramo (Semanal)
         const tiposFlores = [
             { id: 'Rosa', color: '#ff0000', centro: '#800000' },
             { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
@@ -302,7 +301,7 @@
         dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
         dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
 
-        // 4. Interacciones (Scroll y Botón)
+        // 4. Interacciones
         window.addEventListener('scroll', () => {
             if (Math.random() > 0.8) { 
                 const h = document.createElement('div');
