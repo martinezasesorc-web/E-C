@@ -177,44 +177,128 @@
         .f3 { left: 75px; transform: rotate(15deg); }
         .tallo { width: 2px; height: 60px; background: #4CAF50; margin: 0 auto; }
 
-        /* --- ANIMACIONES DE LOS NUEVOS CORAZONES --- */
-        .heart-scroll {
-            position: fixed;
-            font-size: 1.5rem;
-            pointer-events: none;
-            z-index: 99;
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
-
-        .heart-brotar {
-            position: absolute;
-            font-size: 1.2rem;
-            pointer-events: none;
-            z-index: 10;
-            bottom: 60px;
-            animation: floatUp linear forwards;
-        }
-        @keyframes floatUp {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--bx), -300px) scale(1.5); opacity: 0; }
-        }
-
         @media (max-width: 600px) {
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
             .message { font-size: 0.95rem; }
             .section-bottom { padding-top: 300px; }
         }
     </style>
+    /* Animación para la lluvia al bajar (Scroll) */
+.heart-scroll {
+    position: fixed;
+    font-size: 1.5rem;
+    pointer-events: none;
+    z-index: 99;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
 </head>
 <body>
 
     <div class="overlay"></div>
 
     <div id="date-box">
-        <span class="date-label">¿CUANTO TE AMO?</span>
+        <span class="date-label">¿CUANDO TE AMO?</span>
         <span class="date-today">JUSTO AHORA: <span id="current-date"></span></span>
-        <div id="live-timer">0
+        <div id="live-timer">00:00:00:0000</div>
+    </div>
+
+    <div class="section-top">
+        <div class="pixel-daisy"></div>
+
+        <div id="content-container">
+            <p class="message">
+                > TE AMO CORAZONA DE MELON<br>
+                > Nunca te van a faltar flores conmigo<br>
+                > TE AMO del 1 al 2 mi Emmita_
+            </p>
+            <button id="love-button">pulsa para saber cuanto te amo</button>
+        </div>
+    </div>
+
+    <div class="section-bottom">
+        <div class="mesa-area">
+            <div id="ramo-container">
+                <div id="slot1" class="flor-ramo f1"></div>
+                <div id="slot2" class="flor-ramo f2"></div>
+                <div id="slot3" class="flor-ramo f3"></div>
+            </div>
+            <div class="jarron"></div>
+            <div class="mesa-linea"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica del Reloj ORIGINAL
+        function updateClock() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('current-date').innerText = `${day}/${month}/${year}`;
+
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const ms = String(now.getMilliseconds()).padStart(3, '0');
+            document.getElementById('live-timer').innerText = `${h}:${m}:${s}:${ms}`;
+            requestAnimationFrame(updateClock);
+        }
+        updateClock();
+
+        // Configuración de Flores
+        const tiposFlores = [
+            { id: 'Rosa', color: '#ff0000', centro: '#800000' },
+            { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
+            { id: 'Tulipan', color: '#ff69b4', centro: '#ff1493' },
+            { id: 'Margarita', color: '#ffffff', centro: '#FFD700' }
+        ];
+
+        function dibujarFlorRamo(slotId, config) {
+            const el = document.getElementById(slotId);
+            el.innerHTML = `
+                <div style="width:16px; height:16px; background:${config.centro}; 
+                     box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
+                </div>
+                <div class="tallo"></div>
+            `;
+        }
+
+        const diaSemana = new Date().getDay(); 
+        const combinaciones = [
+            [0, 0, 0], [1, 0, 1], [2, 2, 2], [3, 1, 3], [0, 2, 0], [1, 1, 1], [3, 0, 2]
+        ];
+        const hoy = combinaciones[diaSemana];
+
+        dibujarFlorRamo('slot1', tiposFlores[hoy[0]]);
+        dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
+        dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
+
+        // Lógica de Corazones y Activación ORIGINAL
+        const btn = document.getElementById('love-button');
+        const ramo = document.getElementById('ramo-container');
+        let heartMultiplier = 6;
+
+        btn.addEventListener('click', () => {
+            ramo.style.opacity = "1";
+            const rect = btn.getBoundingClientRect();
+            for(let i=0; i < heartMultiplier; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart'; h.innerHTML = '❤️';
+                h.style.left = (rect.left + rect.width/2) + 'px';
+                h.style.top = (rect.top + rect.height/2) + 'px';
+                h.style.setProperty('--x', (Math.random()*600 - 300) + 'px');
+                h.style.setProperty('--y', -(Math.random()*500 + 150) + 'px');
+                h.style.animationDuration = (Math.random()*2 + 1) + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 2500);
+            }
+            heartMultiplier += 2;
+        });
+    </script>
+</body>
+</html>
