@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emm 🌼 </title>
     <style>
-        /* Estilos Base Techno - ORIGINALES E INTACTOS */
+        /* Estilos Base Techno */
         body {
             background-color: #000;
             margin: 0;
@@ -20,7 +20,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- 1. CASILLA DE FECHA --- ORIGINAL */
+        /* --- 1. CASILLA DE FECHA --- */
         #date-box {
             position: fixed; 
             left: 20px;
@@ -48,7 +48,6 @@
             position: relative;
         }
 
-        /* Contenedor para agrupar las 5 flores */
         .flower-cluster {
             position: relative;
             display: flex;
@@ -56,12 +55,11 @@
             align-items: center;
         }
 
-        /* Base para las 4 flores laterales */
         .pixel-flower-side {
             position: absolute;
             width: 10px;
             height: 10px;
-            background: #FFD700; /* Centro siempre amarillo */
+            background: #FFD700; 
             box-shadow: 
                 10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700,
                 0 -20px var(--c), 0 -30px var(--c), 10px -20px var(--c), -10px -20px var(--c),
@@ -73,11 +71,11 @@
             animation: pulse-side 2s infinite alternate, float 4s ease-in-out infinite;
         }
 
-        /* Colores y Posiciones Neón (Imagen 3) */
-        .f-orange { --c: #ff6600; transform: translate(-140px, -45px); animation-delay: 0.2s; }
-        .f-green  { --c: #39ff14; transform: translate(-140px, 45px); animation-delay: 0.5s; }
-        .f-yellow { --c: #FFFF00; transform: translate(140px, -45px); animation-delay: 0.8s; }
-        .f-purple { --c: #bc13fe; transform: translate(140px, 45px); animation-delay: 0.3s; }
+        /* AJUSTE DE POSICIONES: Alineadas verticalmente pero separadas por altura */
+        .f-orange { --c: #ff6600; transform: translate(-140px, -85px); animation-delay: 0.2s; }
+        .f-green  { --c: #39ff14; transform: translate(-140px, 85px); animation-delay: 0.5s; }
+        .f-yellow { --c: #FFFF00; transform: translate(140px, -85px); animation-delay: 0.8s; }
+        .f-purple { --c: #bc13fe; transform: translate(140px, 85px); animation-delay: 0.3s; }
 
         .pixel-daisy {
             position: relative;
@@ -111,7 +109,7 @@
             50% { margin-top: -15px; }
         }
 
-        /* --- 3. MENSAJE Y BOTÓN ROJO --- ORIGINAL */
+        /* --- 3. MENSAJE Y BOTÓN ROJO --- */
         #content-container {
             margin-top: 110px;
             text-align: center;
@@ -142,7 +140,6 @@
         }
         #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
 
-        /* Capa de efecto CRT */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -152,7 +149,6 @@
             z-index: 100;
         }
 
-        /* Corazones voladores */
         .heart {
             position: fixed;
             font-size: 1.8rem;
@@ -165,7 +161,7 @@
         }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- MESA Y JARRÓN --- ORIGINAL */
+        /* --- MESA Y JARRÓN --- */
         .section-bottom {
             width: 100%;
             display: flex;
@@ -217,7 +213,6 @@
         .f3 { left: 75px; transform: rotate(15deg); }
         .tallo { width: 2px; height: 60px; background: #4CAF50; margin: 0 auto; }
 
-        /* Corazones al bajar */
         .heart-scroll {
             position: fixed;
             font-size: 1.5rem;
@@ -235,6 +230,9 @@
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
             .message { font-size: 0.95rem; }
             .section-bottom { padding-top: 300px; }
+            /* Ajuste móvil para que no se salgan de la pantalla */
+            .f-orange, .f-green { transform: translate(-100px, var(--y-offset)); }
+            .f-yellow, .f-purple { transform: translate(100px, var(--y-offset)); }
         }
     </style>
 </head>
@@ -324,7 +322,7 @@
             const el = document.getElementById(slotId);
             el.innerHTML = `
                 <div style="width:16px; height:16px; background:${config.centro}; 
-                     box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
+                      box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
                 </div>
                 <div class="tallo"></div>
             `;
