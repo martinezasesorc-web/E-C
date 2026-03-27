@@ -1,325 +1,678 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emm 🌼</title>
+
+    <title>Emm 🌼 </title>
+
     <style>
+
         /* Estilos Base Techno */
+
         body {
+
             background-color: #000;
+
             margin: 0;
+
             min-height: 220vh;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             font-family: 'Courier New', Courier, monospace;
+
             color: #fff;
+
             position: relative;
+
             overflow-x: hidden;
+
             scroll-behavior: smooth;
+
         }
+
+
 
         /* --- 1. CASILLA DE FECHA --- */
+
         #date-box {
+
             position: fixed; 
+
             left: 20px;
+
             top: 20px;
+
             border: 1px solid #00FF41;
+
             padding: 10px;
-            background: rgba(0, 0, 0, 0.8);
+
+            background: rgba(0, 255, 65, 0.05);
+
             text-align: left;
+
             font-size: 0.8rem;
+
             z-index: 15;
+
             box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+
         }
+
         .date-label { color: #00FF41; font-weight: bold; display: block; margin-bottom: 2px; }
+
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
+
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
 
-        /* --- 2. LA SECCIÓN DE ARRIBA (3 FLORES) --- */
+
+
+        /* --- 2. LA SECCIÓN DE ARRIBA (FLORES NEÓN EN LÍNEA) --- */
+
         .section-top {
+
             height: 100vh;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
+
             align-items: center;
+
             width: 100%;
+
             position: relative;
+
         }
+
+
 
         .flower-cluster {
+
             position: relative;
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             height: 150px;
-            width: 100%;
+
         }
+
+
 
         .pixel-flower-side {
+
             position: absolute;
+
             width: 10px;
+
             height: 10px;
+
             background: #FFD700; 
+
+            /* El color --c se controla desde JavaScript */
+
             box-shadow: 
+
                 10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700,
+
                 0 -20px var(--c), 0 -30px var(--c), 10px -20px var(--c), -10px -20px var(--c),
+
                 0 30px var(--c), 0 40px var(--c), 10px 30px var(--c), -10px 30px var(--c),
+
                 30px 0 var(--c), 40px 0 var(--c), 30px 10px var(--c), 30px -10px var(--c),
+
                 -30px 0 var(--c), -40px 0 var(--c), -30px 10px var(--c), -30px -10px var(--c),
+
                 20px 20px var(--c), 20px -20px var(--c), -20px 20px var(--c), -20px -20px var(--c),
+
                 0 50px #4CAF50, 0 60px #4CAF50;
+
             animation: pulse-side 2s infinite alternate, float 4s ease-in-out infinite;
+
         }
 
-        /* Solo dos flores laterales con espacio ajustado */
-        .f-1 { --c: var(--clr-1); transform: translateX(-100px); animation-delay: 0.1s; }
-        .f-2 { --c: var(--clr-2); transform: translateX(100px); animation-delay: 0.3s; }
+
+
+        /* Alineación en la misma línea horizontal */
+
+        .f-1 { --c: var(--clr-1); transform: translateX(-180px); animation-delay: 0.1s; }
+
+        .f-2 { --c: var(--clr-2); transform: translateX(-90px); animation-delay: 0.3s; }
+
+        .f-3 { --c: var(--clr-3); transform: translateX(90px); animation-delay: 0.5s; }
+
+        .f-4 { --c: var(--clr-4); transform: translateX(180px); animation-delay: 0.7s; }
+
+
 
         .pixel-daisy {
+
             position: relative;
+
             width: 10px;
+
             height: 10px;
+
             background: #FFD700; 
+
             box-shadow: 
+
                 10px 0 #FFD700, 0 10px #FFD700, 10px 10px #FFD700, -10px 10px #FFD700, 10px -10px #FFD700,
+
                 0 -20px #FFFF00, 0 -30px #FFFF00, 10px -20px #FFFF00, -10px -20px #FFFF00,
+
                 0 30px #FFFF00, 0 40px #FFFF00, 10px 30px #FFFF00, -10px 30px #FFFF00,
+
                 30px 0 #FFFF00, 40px 0 #FFFF00, 30px 10px #FFFF00, 30px -10px #FFFF00,
+
                 -30px 0 #FFFF00, -40px 0 #FFFF00, -30px 10px #FFFF00, -30px -10px #FFFF00,
+
                 20px 20px #FFFF00, 20px -20px #FFFF00, -20px 20px #FFFF00, -20px -20px #FFFF00,
+
                 0 50px #4CAF50, 0 60px #4CAF50, 0 70px #4CAF50, 0 80px #4CAF50;
+
             animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
+
             z-index: 10;
+
         }
+
+
 
         @keyframes pulse {
+
             from { filter: drop-shadow(0 0 5px #FFFF00) brightness(1); }
+
             to { filter: drop-shadow(0 0 20px #FFFF00) brightness(1.3); }
+
         }
+
+
 
         @keyframes pulse-side {
+
             from { filter: drop-shadow(0 0 5px var(--c)) brightness(1); }
+
             to { filter: drop-shadow(0 0 15px var(--c)) brightness(1.2); }
+
         }
+
+
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%, 100% { margin-top: 0; }
+
+            50% { margin-top: -15px; }
+
         }
+
+
 
         /* --- 3. MENSAJE Y BOTÓN --- */
+
         #content-container {
+
             margin-top: 130px;
+
             text-align: center;
+
             max-width: 85%;
+
             z-index: 5;
+
             opacity: 0;
+
             animation: fadeIn 3s ease-out forwards 1s;
+
         }
+
         .message {
+
             font-size: 1.1rem;
+
             line-height: 1.6;
+
             color: #00FF41; 
+
             text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+
             margin-bottom: 35px;
+
         }
+
         #love-button {
+
             background-color: #e74c3c;
+
             color: #fff;
+
             border: none;
+
             padding: 14px 28px;
+
             font-family: 'Courier New', monospace;
+
             font-weight: bold;
+
             text-transform: uppercase;
+
             cursor: pointer;
+
             border-radius: 4px;
+
             box-shadow: 0 5px 0 #b03a2e;
+
             transition: all 0.1s;
+
         }
+
         #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
 
+
+
         .overlay {
+
             position: fixed;
+
             top: 0; left: 0; width: 100%; height: 100%;
+
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+
             background-size: 100% 4px;
+
             pointer-events: none;
+
             z-index: 100;
+
         }
+
+
 
         /* --- MESA Y JARRÓN --- */
+
         .section-bottom {
+
             width: 100%;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             position: relative;
+
             padding-top: 400px;
+
         }
+
         .mesa-area {
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             position: relative;
+
             margin-bottom: 200px;
+
         }
+
         .mesa-linea {
-            width: 300px;
+
+            width: 320px;
+
             height: 4px;
+
             background: #00FF41;
+
             box-shadow: 0 0 15px #00FF41;
+
         }
+
         .jarron {
+
             width: 40px;
+
             height: 55px;
+
             border: 2px solid #00FF41;
+
             border-bottom: none;
+
             background: rgba(0, 255, 65, 0.1);
+
             border-radius: 8px 8px 0 0;
+
             position: relative;
+
         }
+
+
 
         .heart, .heart-scroll {
+
             position: fixed;
+
             pointer-events: none;
+
             z-index: 101;
+
         }
+
         @keyframes fly { to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; } }
+
         @keyframes fall {
+
             0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+
         }
+
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* AJUSTES MÓVIL */
+
+
         @media (max-width: 600px) {
+
             #date-box { font-size: 0.65rem; left: 10px; top: 10px; }
+
             .message { font-size: 0.95rem; }
-            /* Flores más juntas en móvil para que no se salgan */
-            .f-1 { transform: translateX(-70px); }
-            .f-2 { transform: translateX(70px); }
+
+
+            .f-2 { transform: translateX(-60px); }
+
+            .f-3 { transform: translateX(60px); }
+
+
         }
+
     </style>
+
 </head>
+
 <body>
+
+
 
     <div class="overlay"></div>
 
+
+
     <div id="date-box">
+
         <span class="date-label">¿CUANDO TE AMO?</span>
+
         <span class="date-today">JUSTO AHORA: <span id="current-date"></span></span>
-        <div id="live-timer">00:00:00:000</div>
+
+        <div id="live-timer">00:00:00:0000</div>
+
     </div>
+
+
 
     <div class="section-top">
+
         <div class="flower-cluster" id="neon-cluster">
+
             <div class="pixel-flower-side f-1"></div>
-            <div class="pixel-daisy"></div>
+
             <div class="pixel-flower-side f-2"></div>
+
+            
+
+            <div class="pixel-daisy"></div>
+
+
+
+            <div class="pixel-flower-side f-3"></div>
+
+            <div class="pixel-flower-side f-4"></div>
+
         </div>
+
+
 
         <div id="content-container">
+
             <p class="message">
+
                 &gt; TE AMO CORAZONA DE MELON<br>
+
                 &gt; Nunca te van a faltar flores conmigo<br>
+
                 &gt; TE AMO del 1 al 2 mi Emmita_
+
             </p>
+
             <button id="love-button">pulsa para saber cuanto te amo</button>
+
         </div>
+
     </div>
+
+
 
     <div class="section-bottom">
+
         <div class="mesa-area">
+
             <div id="ramo-container" style="position:absolute; bottom:55px; width:100px; height:100px; display:flex; justify-content:center; opacity:0; transition:opacity 1.5s ease;">
+
                 <div id="slot1" style="position:absolute; bottom:0; left:5px; transform:rotate(-15deg);"></div>
+
                 <div id="slot2" style="position:absolute; bottom:0; left:40px; bottom:10px;"></div>
+
                 <div id="slot3" style="position:absolute; bottom:0; left:75px; transform:rotate(15deg);"></div>
+
             </div>
+
             <div class="jarron"></div>
+
             <div class="mesa-linea"></div>
+
         </div>
+
     </div>
 
+
+
     <script>
-        // 1. Colores Diarios
+
+        // 1. Lógica de Colores "Infinitos" Diarios
+
         function actualizarColoresDiarios() {
+
             const ahora = new Date();
+
+            // Generamos una semilla única por día
+
             const semilla = ahora.getFullYear() * 372 + (ahora.getMonth() + 1) * 31 + ahora.getDate();
+
             const cluster = document.getElementById('neon-cluster');
-            for (let i = 1; i <= 2; i++) {
-                const hue = (semilla * (i * 123)) % 360; 
+
+
+
+            for (let i = 1; i <= 4; i++) {
+
+                // Variamos el matiz (Hue) basado en la semilla y la posición de la flor
+
+                const hue = (semilla * (i * 97)) % 360; 
+
                 cluster.style.setProperty(`--clr-${i}`, `hsl(${hue}, 100%, 50%)`);
+
             }
+
         }
+
         actualizarColoresDiarios();
 
-        // 2. Reloj
+
+
+        // 2. Reloj y Fecha
+
         function updateClock() {
+
             const now = new Date();
+
             document.getElementById('current-date').innerText = now.toLocaleDateString('es-ES');
+
             const h = String(now.getHours()).padStart(2, '0');
+
             const m = String(now.getMinutes()).padStart(2, '0');
+
             const s = String(now.getSeconds()).padStart(2, '0');
+
             const ms = String(now.getMilliseconds()).padStart(3, '0');
+
             document.getElementById('live-timer').innerText = `${h}:${m}:${s}:${ms}`;
+
             requestAnimationFrame(updateClock);
+
         }
+
         updateClock();
 
-        // 3. Ramo Semanal
+
+
+        // 3. Flores del Ramo (Lógica semanal ya existente)
+
         const tiposFlores = [
+
             { id: 'Rosa', color: '#ff0000', centro: '#800000' },
+
             { id: 'Girasol', color: '#FFD700', centro: '#5d3a1a' },
+
             { id: 'Tulipan', color: '#ff69b4', centro: '#ff1493' },
+
             { id: 'Margarita', color: '#ffffff', centro: '#FFD700' }
+
         ];
 
+
+
         function dibujarFlorRamo(slotId, config) {
+
             const el = document.getElementById(slotId);
+
             el.innerHTML = `
+
                 <div style="width:16px; height:16px; background:${config.centro}; 
+
                     box-shadow: 0 -8px ${config.color}, 0 8px ${config.color}, 8px 0 ${config.color}, -8px 0 ${config.color};">
+
                 </div>
+
                 <div style="width: 2px; height: 60px; background: #4CAF50; margin: 0 auto;"></div>
+
             `;
+
         }
 
-        const hoy = [[0,0,0], [1,0,1], [2,2,2], [3,1,3], [0,2,0], [1,1,1], [3,0,2]][new Date().getDay()];
+
+
+        const diaSemana = new Date().getDay(); 
+
+        const combinaciones = [[0,0,0], [1,0,1], [2,2,2], [3,1,3], [0,2,0], [1,1,1], [3,0,2]];
+
+        const hoy = combinaciones[diaSemana];
+
         dibujarFlorRamo('slot1', tiposFlores[hoy[0]]);
+
         dibujarFlorRamo('slot2', tiposFlores[hoy[1]]);
+
         dibujarFlorRamo('slot3', tiposFlores[hoy[2]]);
 
-        // 4. Interacciones
+
+
+        // 4. Interacciones (Scroll y Botón)
+
         window.addEventListener('scroll', () => {
-            if (Math.random() > 0.9) { 
+
+            if (Math.random() > 0.8) { 
+
                 const h = document.createElement('div');
-                h.className = 'heart-scroll'; h.innerHTML = '❤️';
+
+                h.className = 'heart-scroll'; h.innerHTML = Math.random() > 0.5 ? '❤️' : '💛';
+
                 h.style.left = Math.random() * 100 + 'vw';
+
                 h.style.top = '-50px'; h.style.fontSize = '1.5rem';
+
                 h.style.animation = `fall ${Math.random()*2 + 3}s linear forwards`;
+
                 document.body.appendChild(h);
+
                 setTimeout(() => h.remove(), 5000);
+
             }
+
         });
 
+
+
         const btn = document.getElementById('love-button');
+
+        const ramo = document.getElementById('ramo-container');
+
         let multiplier = 6;
+
+
+
         btn.addEventListener('click', () => {
-            document.getElementById('ramo-container').style.opacity = "1";
+
+            ramo.style.opacity = "1";
+
+            const rect = btn.getBoundingClientRect();
+
             for(let i=0; i < multiplier; i++) {
+
                 const h = document.createElement('div');
+
                 h.className = 'heart'; h.innerHTML = '❤️';
-                h.style.left = '50%'; h.style.top = '50%';
+
+                h.style.left = (rect.left + rect.width/2) + 'px';
+
+                h.style.top = (rect.top + rect.height/2) + 'px';
+
                 h.style.setProperty('--x', (Math.random()*600 - 300) + 'px');
+
                 h.style.setProperty('--y', -(Math.random()*500 + 150) + 'px');
+
                 h.style.animation = `fly ${Math.random()*2 + 1}s linear forwards`;
+
                 document.body.appendChild(h);
+
                 setTimeout(() => h.remove(), 2500);
+
             }
+
             multiplier += 2;
+
         });
+
     </script>
+
 </body>
+
 </html>
+
