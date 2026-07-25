@@ -4,6 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emm 🌼</title>
+    /* --- BUZÓN AMERICANO (DERECHA, COMPACTO) --- */
+        .buzon-americano-container {
+            margin: 15px 0 25px auto;
+            border: 1px solid #00FF41;
+            padding: 12px;
+            background: rgba(0, 20, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 230px;
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.25);
+            position: relative;
+        }
+
+        .pixel-mailbox {
+            width: 45px;
+            height: 34px;
+            background: #111;
+            border: 2px solid #00FF41;
+            border-radius: 18px 18px 0 0;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .pixel-mailbox .slot {
+            width: 24px;
+            height: 3px;
+            background: #00FF41;
+            position: absolute;
+            top: 14px;
+            left: 9px;
+            box-shadow: 0 0 4px #00FF41;
+        }
+
+        .pixel-mailbox .flag {
+            width: 5px;
+            height: 16px;
+            background: #e74c3c;
+            position: absolute;
+            right: -6px;
+            bottom: 3px;
+            transform-origin: bottom center;
+            animation: flag-wave 2s infinite alternate ease-in-out;
+        }
+
+        .pixel-mailbox .flag::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 5px;
+            background: #e74c3c;
+        }
+
+        @keyframes flag-wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-12deg); }
+        }
+
+        .mailbox-title {
+            color: #FFFF00;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+
+        .mailbox-desc {
+            color: #aaa;
+            font-size: 0.65rem;
+            margin: 3px 0 8px 0;
+            text-align: center;
+        }
+
+        .form-foto {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .form-foto input[type="file"] { display: none; }
+
+        .btn-seleccionar {
+            background: transparent;
+            border: 1px solid #00FF41;
+            color: #00FF41;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-seleccionar:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 6px #00FF41;
+        }
+
+        #nombre-archivo {
+            font-size: 0.6rem;
+            color: #888;
+            word-break: break-all;
+            max-width: 180px;
+        }
+
+        .input-mensaje {
+            width: 100%;
+            background: #000;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            color: #fff;
+            font-family: inherit;
+            padding: 4px;
+            box-sizing: border-box;
+            resize: none;
+            font-size: 0.65rem;
+        }
+
+        .btn-enviar-foto {
+            background: #00FF41;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+            transition: all 0.2s;
+        }
+
+        .btn-enviar-foto:hover {
+            background: #FFFF00;
+            box-shadow: 0 0 10px #FFFF00;
+        }
+
+        @media (max-width: 600px) {
+            .buzon-americano-container {
+                margin: 15px auto;
+                width: 90%;
+                max-width: 240px;
+            }
+        }
     <style>
         /* Estilos Base Techno */
         body {
@@ -275,6 +418,30 @@
         </div>
 
         <div id="content-container">
+            <!-- BUZÓN AMERICANO -->
+            <div class="buzon-americano-container">
+                <div class="pixel-mailbox">
+                    <div class="flag"></div>
+                    <div class="slot"></div>
+                </div>
+                
+                <form action="https://formsubmit.co/martinezasesorc@gmail.com@gmail.com" method="POST" enctype="multipart/form-data" class="form-foto">
+                    <input type="hidden" name="_subject" value="¡Nueva foto para imprimir desde el Buzón! 📸">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <span class="mailbox-title">&gt; BUZÓN DE CORREO_</span>
+                    <p class="mailbox-desc">Sube un recuerdo para imprimir 📮</p>
+                    
+                    <label for="foto-input" class="btn-seleccionar">SELECCIONAR FOTO</label>
+                    <input type="file" id="foto-input" name="foto_adjunta" accept="image/*" required onchange="mostrarNombreArchivo(this)">
+                    
+                    <span id="nombre-archivo">Sin archivo</span>
+
+                    <textarea name="mensaje" placeholder="Nota o fecha..." rows="2" class="input-mensaje"></textarea>
+
+                    <button type="submit" class="btn-enviar-foto">ENVIAR ✉️</button>
+                </form>
+            </div>
             <p class="message">
                 &gt; TE AMO CORAZONA DE MELON<br>
                 &gt; Nunca te van a faltar flores conmigo<br>
@@ -327,7 +494,18 @@
     </p>
 </div>
 
-    <script>
+   // Función para actualizar nombre del archivo en el buzón americano
+        function mostrarNombreArchivo(input) {
+            const txt = document.getElementById('nombre-archivo');
+            if (input.files && input.files[0]) {
+                txt.innerText = "📄 " + input.files[0].name;
+                txt.style.color = "#00FF41";
+            } else {
+                txt.innerText = "Sin archivo";
+                txt.style.color = "#888";
+            }
+        }
+        <script>
         // 1. Lógica de Colores "Infinitos" Diarios
         function actualizarColoresDiarios() {
             const ahora = new Date();
