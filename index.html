@@ -5,142 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emm 🌼</title>
     <style>
-        /* --- BUZÓN AMERICANO (DERECHA, COMPACTO) --- */
-        .buzon-americano-container {
-            margin: 15px auto 25px auto;
-            border: 1px solid #00FF41;
-            padding: 12px;
-            background: rgba(0, 20, 0, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 230px;
-            box-shadow: 0 0 12px rgba(0, 255, 65, 0.25);
-            position: relative;
-        }
-
-        .pixel-mailbox {
-            width: 45px;
-            height: 34px;
-            background: #111;
-            border: 2px solid #00FF41;
-            border-radius: 18px 18px 0 0;
-            position: relative;
-            margin-bottom: 8px;
-        }
-
-        .pixel-mailbox .slot {
-            width: 24px;
-            height: 3px;
-            background: #00FF41;
-            position: absolute;
-            top: 14px;
-            left: 9px;
-            box-shadow: 0 0 4px #00FF41;
-        }
-
-        .pixel-mailbox .flag {
-            width: 5px;
-            height: 16px;
-            background: #e74c3c;
-            position: absolute;
-            right: -6px;
-            bottom: 3px;
-            transform-origin: bottom center;
-            animation: flag-wave 2s infinite alternate ease-in-out;
-        }
-
-        .pixel-mailbox .flag::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 8px;
-            height: 5px;
-            background: #e74c3c;
-        }
-
-        @keyframes flag-wave {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-12deg); }
-        }
-
-        .mailbox-title {
-            color: #FFFF00;
-            font-weight: bold;
-            font-size: 0.75rem;
-        }
-
-        .mailbox-desc {
-            color: #aaa;
-            font-size: 0.65rem;
-            margin: 3px 0 8px 0;
-            text-align: center;
-        }
-
-        .form-foto {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            width: 100%;
-            align-items: center;
-        }
-
-        .form-foto input[type="file"] { display: none; }
-
-        .btn-seleccionar {
-            background: transparent;
-            border: 1px solid #00FF41;
-            color: #00FF41;
-            padding: 4px 8px;
-            font-family: inherit;
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-seleccionar:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 6px #00FF41;
-        }
-
-        #nombre-archivo {
-            font-size: 0.6rem;
-            color: #888;
-            word-break: break-all;
-            max-width: 180px;
-        }
-
-        .input-mensaje {
-            width: 100%;
-            background: #000;
-            border: 1px solid rgba(0, 255, 65, 0.5);
-            color: #fff;
-            font-family: inherit;
-            padding: 4px;
-            box-sizing: border-box;
-            resize: none;
-            font-size: 0.65rem;
-        }
-
-        .btn-enviar-foto {
-            background: #00FF41;
-            color: #000;
-            border: none;
-            padding: 5px 10px;
-            font-family: inherit;
-            font-size: 0.7rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
-            transition: all 0.2s;
-        }
-
-        .btn-enviar-foto:hover {
-            background: #FFFF00;
-            box-shadow: 0 0 10px #FFFF00;
-        }
-
         /* Estilos Base Techno */
         body {
             background-color: #000;
@@ -175,13 +39,14 @@
 
         /* --- 2. LA SECCIÓN DE ARRIBA (FLORES NEÓN EN LÍNEA) --- */
         .section-top {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
             position: relative;
+            padding: 40px 0;
         }
 
         .flower-cluster {
@@ -251,6 +116,9 @@
             z-index: 5;
             opacity: 0;
             animation: fadeIn 3s ease-out forwards 1s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .message {
             font-size: 1.1rem;
@@ -273,6 +141,148 @@
             transition: all 0.1s;
         }
         #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
+
+        /* --- BUZÓN AMERICANO OCULTO HASTA EL CLIC --- */
+        .buzon-americano-container {
+            display: none; /* Oculto por defecto */
+            margin-top: 30px;
+            border: 1px solid #00FF41;
+            padding: 15px;
+            background: rgba(0, 20, 0, 0.85);
+            flex-direction: column;
+            align-items: center;
+            width: 250px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            position: relative;
+            animation: expandirBuzon 0.8s ease-out forwards;
+        }
+
+        @keyframes expandirBuzon {
+            from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .pixel-mailbox {
+            width: 45px;
+            height: 34px;
+            background: #111;
+            border: 2px solid #00FF41;
+            border-radius: 18px 18px 0 0;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .pixel-mailbox .slot {
+            width: 24px;
+            height: 3px;
+            background: #00FF41;
+            position: absolute;
+            top: 14px;
+            left: 9px;
+            box-shadow: 0 0 4px #00FF41;
+        }
+
+        .pixel-mailbox .flag {
+            width: 5px;
+            height: 16px;
+            background: #e74c3c;
+            position: absolute;
+            right: -6px;
+            bottom: 3px;
+            transform-origin: bottom center;
+            animation: flag-wave 2s infinite alternate ease-in-out;
+        }
+
+        .pixel-mailbox .flag::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 5px;
+            background: #e74c3c;
+        }
+
+        @keyframes flag-wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-12deg); }
+        }
+
+        .mailbox-title {
+            color: #FFFF00;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .mailbox-desc {
+            color: #aaa;
+            font-size: 0.68rem;
+            margin: 4px 0 10px 0;
+            text-align: center;
+        }
+
+        .form-foto {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .form-foto input[type="file"] { display: none; }
+
+        .btn-seleccionar {
+            background: transparent;
+            border: 1px solid #00FF41;
+            color: #00FF41;
+            padding: 6px 10px;
+            font-family: inherit;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-seleccionar:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 6px #00FF41;
+        }
+
+        #nombre-archivo {
+            font-size: 0.65rem;
+            color: #888;
+            word-break: break-all;
+            max-width: 200px;
+        }
+
+        .input-mensaje {
+            width: 100%;
+            background: #000;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            color: #fff;
+            font-family: inherit;
+            padding: 6px;
+            box-sizing: border-box;
+            resize: none;
+            font-size: 0.7rem;
+        }
+
+        .btn-enviar-foto {
+            background: #00FF41;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+            transition: all 0.2s;
+        }
+
+        .btn-enviar-foto:hover {
+            background: #FFFF00;
+            box-shadow: 0 0 10px #FFFF00;
+        }
 
         .overlay {
             position: fixed;
@@ -315,7 +325,7 @@
             position: relative;
         }
 
-        /* --- ESTILOS DEL BUZÓN DE RECUERDOS (NUEVO) --- */
+        /* --- ESTILOS DEL BUZÓN DE RECUERDOS --- */
         .buzon-amor {
             width: 90%;
             max-width: 450px;
@@ -391,9 +401,8 @@
             .f-2 { transform: translateX(-100px); }
             .f-3 { transform: translateX(100px); }
             .buzon-americano-container {
-                margin: 15px auto;
                 width: 90%;
-                max-width: 240px;
+                max-width: 250px;
             }
         }
     </style>
@@ -416,8 +425,16 @@
         </div>
 
         <div id="content-container">
-            <!-- BUZÓN AMERICANO -->
-            <div class="buzon-americano-container">
+            <p class="message">
+                &gt; TE AMO CORAZONA DE MELON<br>
+                &gt; Nunca te van a faltar flores conmigo<br>
+                &gt; TE AMO del 1 al 2 mi Emmita_
+            </p>
+            
+            <button id="love-button">pulsa para saber cuanto te amo</button>
+
+            <!-- BUZÓN AMERICANO (APARECE AL DAR CLIC AL BOTÓN) -->
+            <div class="buzon-americano-container" id="buzon-desplegable">
                 <div class="pixel-mailbox">
                     <div class="flag"></div>
                     <div class="slot"></div>
@@ -440,13 +457,6 @@
                     <button type="submit" class="btn-enviar-foto">ENVIAR ✉️</button>
                 </form>
             </div>
-
-            <p class="message">
-                &gt; TE AMO CORAZONA DE MELON<br>
-                &gt; Nunca te van a faltar flores conmigo<br>
-                &gt; TE AMO del 1 al 2 mi Emmita_
-            </p>
-            <button id="love-button">pulsa para saber cuanto te amo</button>
         </div>
     </div>
 
@@ -580,10 +590,17 @@
 
         const btn = document.getElementById('love-button');
         const ramo = document.getElementById('ramo-container');
+        const buzon = document.getElementById('buzon-desplegable');
         let multiplier = 6;
 
         btn.addEventListener('click', () => {
+            // Revelar el buzón estilo sorpresa
+            buzon.style.display = 'flex';
+
+            // Mostrar flores en la jarra
             ramo.style.opacity = "1";
+            
+            // Lluvia de corazones
             const rect = btn.getBoundingClientRect();
             for(let i=0; i < multiplier; i++) {
                 const h = document.createElement('div');
