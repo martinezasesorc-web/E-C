@@ -37,7 +37,7 @@
         .date-today { color: #FFFF00; font-weight: bold; display: block; margin-bottom: 5px; }
         #live-timer { color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
 
-        /* --- 2. LA SECCIÓN DE ARRIBA (FLORES NEÓN EN LÍNEA) --- */
+        /* --- 2. LA SECCIÓN DE ARRIBA --- */
         .section-top {
             min-height: 100vh;
             display: flex;
@@ -142,24 +142,20 @@
         }
         #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
 
-        /* --- BUZÓN AMERICANO OCULTO HASTA EL CLIC --- */
-        .buzon-americano-container {
-            display: none; /* Oculto por defecto */
-            margin-top: 30px;
-            border: 1px solid #00FF41;
-            padding: 15px;
-            background: rgba(0, 20, 0, 0.85);
+        /* --- ÍCONO DEL BUZÓN FLOTANTE Y INTERACTIVO --- */
+        .buzon-icono-wrapper {
+            margin-top: 35px;
+            cursor: pointer;
+            display: flex;
             flex-direction: column;
             align-items: center;
-            width: 250px;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
-            position: relative;
-            animation: expandirBuzon 0.8s ease-out forwards;
+            gap: 8px;
+            transition: transform 0.2s, filter 0.2s;
         }
 
-        @keyframes expandirBuzon {
-            from { opacity: 0; transform: translateY(-10px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .buzon-icono-wrapper:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px #00FF41);
         }
 
         .pixel-mailbox {
@@ -169,7 +165,6 @@
             border: 2px solid #00FF41;
             border-radius: 18px 18px 0 0;
             position: relative;
-            margin-bottom: 8px;
         }
 
         .pixel-mailbox .slot {
@@ -208,23 +203,67 @@
             100% { transform: rotate(-12deg); }
         }
 
-        .mailbox-title {
-            color: #FFFF00;
-            font-weight: bold;
-            font-size: 0.8rem;
+        .buzon-hint {
+            color: #00FF41;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
 
-        .mailbox-desc {
-            color: #aaa;
-            font-size: 0.68rem;
-            margin: 4px 0 10px 0;
+        /* --- VENTANA EMERGENTE (MODAL) DEL BUZÓN --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #050d05;
+            border: 2px solid #00FF41;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.4);
+            padding: 25px;
+            width: 90%;
+            max-width: 320px;
+            position: relative;
             text-align: center;
+            animation: modalPop 0.3s ease-out forwards;
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            color: #FFFF00;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .modal-promo {
+            color: #00FF41;
+            font-size: 0.72rem;
+            line-height: 1.4;
+            margin-bottom: 18px;
+            border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
+            padding-bottom: 12px;
         }
 
         .form-foto {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
             width: 100%;
             align-items: center;
         }
@@ -235,23 +274,24 @@
             background: transparent;
             border: 1px solid #00FF41;
             color: #00FF41;
-            padding: 6px 10px;
+            padding: 8px 12px;
             font-family: inherit;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.2s;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .btn-seleccionar:hover {
             background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 6px #00FF41;
+            box-shadow: 0 0 8px #00FF41;
         }
 
         #nombre-archivo {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #888;
             word-break: break-all;
-            max-width: 200px;
         }
 
         .input-mensaje {
@@ -260,28 +300,35 @@
             border: 1px solid rgba(0, 255, 65, 0.5);
             color: #fff;
             font-family: inherit;
-            padding: 6px;
+            padding: 8px;
             box-sizing: border-box;
             resize: none;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
         }
 
         .btn-enviar-foto {
             background: #00FF41;
             color: #000;
             border: none;
-            padding: 6px 12px;
+            padding: 10px 16px;
             font-family: inherit;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
             transition: all 0.2s;
         }
 
         .btn-enviar-foto:hover {
             background: #FFFF00;
-            box-shadow: 0 0 10px #FFFF00;
+            box-shadow: 0 0 12px #FFFF00;
+        }
+
+        .close-hint {
+            margin-top: 15px;
+            font-size: 0.6rem;
+            color: #666;
         }
 
         .overlay {
@@ -400,10 +447,6 @@
             .message { font-size: 0.95rem; }
             .f-2 { transform: translateX(-100px); }
             .f-3 { transform: translateX(100px); }
-            .buzon-americano-container {
-                width: 90%;
-                max-width: 250px;
-            }
         }
     </style>
 </head>
@@ -433,30 +476,43 @@
             
             <button id="love-button">pulsa para saber cuanto te amo</button>
 
-            <!-- BUZÓN AMERICANO (APARECE AL DAR CLIC AL BOTÓN) -->
-            <div class="buzon-americano-container" id="buzon-desplegable">
+            <!-- SÓLO EL FORMA DEL BUZÓN FLOTANTE -->
+            <div class="buzon-icono-wrapper" onclick="abrirBuzon(event)">
                 <div class="pixel-mailbox">
                     <div class="flag"></div>
                     <div class="slot"></div>
                 </div>
-                
-                <form action="https://formsubmit.co/martinezasesorc@gmail.com" method="POST" enctype="multipart/form-data" class="form-foto">
-                    <input type="hidden" name="_subject" value="¡Nueva foto para imprimir desde el Buzón! 📸">
-                    <input type="hidden" name="_captcha" value="false">
-                    
-                    <span class="mailbox-title">&gt; BUZÓN DE CORREO_</span>
-                    <p class="mailbox-desc">Sube un recuerdo para imprimir 📮</p>
-                    
-                    <label for="foto-input" class="btn-seleccionar">SELECCIONAR FOTO</label>
-                    <input type="file" id="foto-input" name="foto_adjunta" accept="image/*" required onchange="mostrarNombreArchivo(this)">
-                    
-                    <span id="nombre-archivo">Sin archivo</span>
-
-                    <textarea name="mensaje" placeholder="Nota o fecha..." rows="2" class="input-mensaje"></textarea>
-
-                    <button type="submit" class="btn-enviar-foto">ENVIAR ✉️</button>
-                </form>
+                <span class="buzon-hint">[ ENVIAR RECUERDO ]</span>
             </div>
+        </div>
+    </div>
+
+    <!-- PESTAÑA / MODAL QUE APARECE AL CLICKEAR EL BUZÓN -->
+    <div class="modal-overlay" id="modal-buzon" onclick="cerrarSiHaceClicAfuera(event)">
+        <div class="modal-card">
+            <div class="modal-header">&gt; BUZÓN ESPECIAL_</div>
+            
+            <p class="modal-promo">
+                Subes un recuerdo y estará impreso en menos de 24 horas o te ganas una <strong>Dream Date</strong> 🎟️✨
+            </p>
+
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {alEnviarFoto();}"></iframe>
+
+            <form action="https://formsubmit.co/martinezasesorc@gmail.com" method="POST" enctype="multipart/form-data" target="hidden_iframe" onsubmit="submitted=true;" class="form-foto">
+                <input type="hidden" name="_subject" value="¡Nueva foto enviada por Emma! 📸">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <label for="foto-input" class="btn-seleccionar">📷 SELECCIONAR FOTO</label>
+                <input type="file" id="foto-input" name="foto_adjunta" accept="image/*" required onchange="mostrarNombreArchivo(this)">
+                
+                <span id="nombre-archivo">Sin archivo seleccionado</span>
+
+                <textarea name="mensaje" placeholder="Agrega una nota o fecha especial..." rows="2" class="input-mensaje"></textarea>
+
+                <button type="submit" class="btn-enviar-foto">ENVIAR FOTO ✉️</button>
+            </form>
+
+            <div class="close-hint">(Haz clic fuera para cerrar)</div>
         </div>
     </div>
 
@@ -504,16 +560,41 @@
     </div>
 
     <script>
-        // Función para actualizar nombre del archivo en el buzón americano
+        let submitted = false;
+
+        // Abrir/Cerrar Modal del Buzón
+        function abrirBuzon(event) {
+            event.stopPropagation();
+            document.getElementById('modal-buzon').classList.add('active');
+        }
+
+        function cerrarBuzon() {
+            document.getElementById('modal-buzon').classList.remove('active');
+        }
+
+        function cerrarSiHaceClicAfuera(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                cerrarBuzon();
+            }
+        }
+
+        // Mostrar nombre del archivo
         function mostrarNombreArchivo(input) {
             const txt = document.getElementById('nombre-archivo');
             if (input.files && input.files[0]) {
                 txt.innerText = "📄 " + input.files[0].name;
                 txt.style.color = "#00FF41";
             } else {
-                txt.innerText = "Sin archivo";
+                txt.innerText = "Sin archivo seleccionado";
                 txt.style.color = "#888";
             }
+        }
+
+        // Callback al enviar la foto en segundo plano
+        function alEnviarFoto() {
+            alert("¡Recuerdo enviado con éxito! 📮✨");
+            cerrarBuzon();
+            submitted = false;
         }
 
         // 1. Lógica de Colores "Infinitos" Diarios
@@ -590,13 +671,9 @@
 
         const btn = document.getElementById('love-button');
         const ramo = document.getElementById('ramo-container');
-        const buzon = document.getElementById('buzon-desplegable');
         let multiplier = 6;
 
         btn.addEventListener('click', () => {
-            // Revelar el buzón estilo sorpresa
-            buzon.style.display = 'flex';
-
             // Mostrar flores en la jarra
             ramo.style.opacity = "1";
             
