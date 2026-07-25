@@ -142,48 +142,50 @@
         }
         #love-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #b03a2e; }
 
-        /* --- ÍCONO DEL BUZÓN FLOTANTE Y INTERACTIVO --- */
+        /* --- ÍCONO DEL BUZÓN FLOTANTE Y MÁS GRANDE / SIMÉTRICO --- */
         .buzon-icono-wrapper {
-            margin-top: 35px;
+            margin-top: 40px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             transition: transform 0.2s, filter 0.2s;
         }
 
         .buzon-icono-wrapper:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 10px #00FF41);
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 12px #00FF41);
         }
 
+        /* Buzón agrandado a proporciones más equilibradas con el botón */
         .pixel-mailbox {
-            width: 45px;
-            height: 34px;
+            width: 70px;
+            height: 52px;
             background: #111;
-            border: 2px solid #00FF41;
-            border-radius: 18px 18px 0 0;
+            border: 3px solid #00FF41;
+            border-radius: 28px 28px 0 0;
             position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
 
         .pixel-mailbox .slot {
-            width: 24px;
-            height: 3px;
+            width: 38px;
+            height: 4px;
             background: #00FF41;
             position: absolute;
-            top: 14px;
-            left: 9px;
-            box-shadow: 0 0 4px #00FF41;
+            top: 22px;
+            left: 14px;
+            box-shadow: 0 0 6px #00FF41;
         }
 
         .pixel-mailbox .flag {
-            width: 5px;
-            height: 16px;
+            width: 7px;
+            height: 25px;
             background: #e74c3c;
             position: absolute;
-            right: -6px;
-            bottom: 3px;
+            right: -9px;
+            bottom: 4px;
             transform-origin: bottom center;
             animation: flag-wave 2s infinite alternate ease-in-out;
         }
@@ -193,8 +195,8 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 8px;
-            height: 5px;
+            width: 12px;
+            height: 8px;
             background: #e74c3c;
         }
 
@@ -205,9 +207,10 @@
 
         .buzon-hint {
             color: #00FF41;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
+            font-weight: bold;
             letter-spacing: 1px;
-            opacity: 0.8;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
         }
 
         /* --- VENTANA EMERGENTE (MODAL) DEL BUZÓN --- */
@@ -233,7 +236,7 @@
             box-shadow: 0 0 25px rgba(0, 255, 65, 0.4);
             padding: 25px;
             width: 90%;
-            max-width: 320px;
+            max-width: 330px;
             position: relative;
             text-align: center;
             animation: modalPop 0.3s ease-out forwards;
@@ -247,13 +250,13 @@
         .modal-header {
             color: #FFFF00;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 12px;
         }
 
         .modal-promo {
             color: #00FF41;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             line-height: 1.4;
             margin-bottom: 18px;
             border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
@@ -476,7 +479,7 @@
             
             <button id="love-button">pulsa para saber cuanto te amo</button>
 
-            <!-- SÓLO EL FORMA DEL BUZÓN FLOTANTE -->
+            <!-- FORMA DEL BUZÓN FLOTANTE (AGRANDADO) -->
             <div class="buzon-icono-wrapper" onclick="abrirBuzon(event)">
                 <div class="pixel-mailbox">
                     <div class="flag"></div>
@@ -496,9 +499,8 @@
                 Subes un recuerdo y estará impreso en menos de 24 horas o te ganas una <strong>Dream Date</strong> 🎟️✨
             </p>
 
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {alEnviarFoto();}"></iframe>
-
-            <form action="https://formsubmit.co/martinezasesorc@gmail.com" method="POST" enctype="multipart/form-data" target="hidden_iframe" onsubmit="submitted=true;" class="form-foto">
+            <!-- Envío directo corregido para FormSubmit -->
+            <form action="https://formsubmit.co/martinezasesorc@gmail.com" method="POST" enctype="multipart/form-data" class="form-foto">
                 <input type="hidden" name="_subject" value="¡Nueva foto enviada por Emma! 📸">
                 <input type="hidden" name="_captcha" value="false">
                 
@@ -560,8 +562,6 @@
     </div>
 
     <script>
-        let submitted = false;
-
         // Abrir/Cerrar Modal del Buzón
         function abrirBuzon(event) {
             event.stopPropagation();
@@ -588,13 +588,6 @@
                 txt.innerText = "Sin archivo seleccionado";
                 txt.style.color = "#888";
             }
-        }
-
-        // Callback al enviar la foto en segundo plano
-        function alEnviarFoto() {
-            alert("¡Recuerdo enviado con éxito! 📮✨");
-            cerrarBuzon();
-            submitted = false;
         }
 
         // 1. Lógica de Colores "Infinitos" Diarios
