@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emm 🌼</title>
-    /* --- BUZÓN AMERICANO (DERECHA, COMPACTO) --- */
+    <style>
+        /* --- BUZÓN AMERICANO (DERECHA, COMPACTO) --- */
         .buzon-americano-container {
-            margin: 15px 0 25px auto;
+            margin: 15px auto 25px auto;
             border: 1px solid #00FF41;
             padding: 12px;
             background: rgba(0, 20, 0, 0.7);
@@ -140,14 +141,6 @@
             box-shadow: 0 0 10px #FFFF00;
         }
 
-        @media (max-width: 600px) {
-            .buzon-americano-container {
-                margin: 15px auto;
-                width: 90%;
-                max-width: 240px;
-            }
-        }
-    <style>
         /* Estilos Base Techno */
         body {
             background-color: #000;
@@ -397,6 +390,11 @@
             .message { font-size: 0.95rem; }
             .f-2 { transform: translateX(-100px); }
             .f-3 { transform: translateX(100px); }
+            .buzon-americano-container {
+                margin: 15px auto;
+                width: 90%;
+                max-width: 240px;
+            }
         }
     </style>
 </head>
@@ -425,7 +423,7 @@
                     <div class="slot"></div>
                 </div>
                 
-                <form action="https://formsubmit.co/martinezasesorc@gmail.com@gmail.com" method="POST" enctype="multipart/form-data" class="form-foto">
+                <form action="https://formsubmit.co/martinezasesorc@gmail.com" method="POST" enctype="multipart/form-data" class="form-foto">
                     <input type="hidden" name="_subject" value="¡Nueva foto para imprimir desde el Buzón! 📸">
                     <input type="hidden" name="_captcha" value="false">
                     
@@ -442,6 +440,7 @@
                     <button type="submit" class="btn-enviar-foto">ENVIAR ✉️</button>
                 </form>
             </div>
+
             <p class="message">
                 &gt; TE AMO CORAZONA DE MELON<br>
                 &gt; Nunca te van a faltar flores conmigo<br>
@@ -465,36 +464,37 @@
         <div class="buzon-amor">
             <h2 class="titulo-buzon">> BUZÓN DE RECUERDOS PARA EMMA_</h2>
 
+            <div class="contenedor-foto">
+                <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
+                <img src="https://i.ibb.co/gbScKg7q/28cfa6d0-4666-4b81-b804-ae7d80a32be1.jpg" class="foto-final" onload="revelarRecuerdo(this)">
+            </div>
 
-    <div class="contenedor-foto">
-        <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
-        <img src="https://i.ibb.co/gbScKg7q/28cfa6d0-4666-4b81-b804-ae7d80a32be1.jpg" class="foto-final" onload="revelarRecuerdo(this)">
+            <div class="contenedor-foto">
+                <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
+                <img src="https://i.ibb.co/Jwk4FMBW/c0415c1d-916e-49b6-8f0b-2580b5f49369.jpg" class="foto-final" onload="revelarRecuerdo(this)">
+            </div>
+
+            <div class="contenedor-foto">
+                <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
+                <img src="https://i.ibb.co/vC9rhWSS/99189633-2afb-4900-861e-04438beb396e.jpg" class="foto-final" onload="revelarRecuerdo(this)">
+            </div>
+
+            <div class="contenedor-foto bloque-infinito">
+                <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
+            </div>
+
+            <div class="contenedor-foto bloque-infinito">
+                <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
+            </div>
+
+            <p style="text-align:center; color:#00FF41; font-size:0.6rem; margin-top: -20px;">
+                [ SISTEMA_EN_PAUSA: EXCESO_DE_AMOR_PARA_EMMITA_ ]
+            </p>
+        </div>
     </div>
 
-    <div class="contenedor-foto">
-        <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
-        <img src="https://i.ibb.co/Jwk4FMBW/c0415c1d-916e-49b6-8f0b-2580b5f49369.jpg" class="foto-final" onload="revelarRecuerdo(this)">
-    </div>
-
-    <div class="contenedor-foto">
-        <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
-        <img src="https://i.ibb.co/vC9rhWSS/99189633-2afb-4900-861e-04438beb396e.jpg" class="foto-final" onload="revelarRecuerdo(this)">
-    </div>
-
-    <div class="contenedor-foto bloque-infinito">
-        <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
-    </div>
-
-    <div class="contenedor-foto bloque-infinito">
-        <div class="texto-carga">cargando recuerdos bonitos contigo...</div>
-    </div>
-
-    <p style="text-align:center; color:#00FF41; font-size:0.6rem; margin-top: -20px;">
-        [ SISTEMA_EN_PAUSA: EXCESO_DE_AMOR_PARA_EMMITA_ ]
-    </p>
-</div>
-
-   // Función para actualizar nombre del archivo en el buzón americano
+    <script>
+        // Función para actualizar nombre del archivo en el buzón americano
         function mostrarNombreArchivo(input) {
             const txt = document.getElementById('nombre-archivo');
             if (input.files && input.files[0]) {
@@ -505,7 +505,7 @@
                 txt.style.color = "#888";
             }
         }
-        <script>
+
         // 1. Lógica de Colores "Infinitos" Diarios
         function actualizarColoresDiarios() {
             const ahora = new Date();
